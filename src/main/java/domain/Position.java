@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 class Position {
 
     private final int position;
@@ -26,9 +28,28 @@ class Position {
         return new Position(position + 1);
     }
 
-    Position follow(Line line) {
-        Direction nextDirection = line.getNextDirectionFrom(this);
-        return this.moveTo(nextDirection);
+    public Position follow(Line line) {
+        Direction direction = line.getNextDirectionFrom(this);
+        return moveTo(direction);
+    }
+
+    Bridge getLeftIn(List<Bridge> bridges) {
+        return this.left().at(bridges);
+    }
+
+    Bridge getRightIn(List<Bridge> bridges) {
+        return this.at(bridges);
+    }
+
+    private Bridge at(List<Bridge> bridges) {
+        if (this.isIn(bridges)) {
+            return bridges.get(this.position);
+        }
+        return Bridge.EMPTY;
+    }
+
+    private boolean isIn(List<Bridge> bridges) {
+        return this.isInBetween(0, bridges.size());
     }
 
     boolean isInBetween(int fromInclusive, int toExclusive) {
