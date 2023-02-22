@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class PositionTest {
+import helper.AbstractTestFixture;
+
+public class PositionTest extends AbstractTestFixture {
 
     @Test
     void 현재_위치의_왼쪽을_알_수_있다() {
@@ -36,5 +38,13 @@ public class PositionTest {
         Position position = new Position(1);
 
         assertThat(position.moveTo(direction)).isEqualTo(new Position(expectedPosition));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0,1", "1,0", "2,2", "3,4", "4,3", "5,5"})
+    void 현재_위치에서_이동할_다음_위치를_알_수_있다(int currentPosition, int expectedNextPosition) {
+        Line line = new Line(convert(true, false, false, true, false));
+
+        assertThat(new Position(currentPosition).follow(line)).isEqualTo(new Position(expectedNextPosition));
     }
 }
