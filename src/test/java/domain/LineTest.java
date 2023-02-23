@@ -1,6 +1,5 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -39,13 +38,5 @@ class LineTest extends AbstractTestFixture {
     void test_notSerial_1_success() {
         assertThatNoException()
                 .isThrownBy(() -> new Line(convert(true)));
-    }
-
-    @ParameterizedTest
-    @CsvSource({"0,1", "1,0", "2,2", "3,4", "4,3", "5,5"})
-    void 현재_위치에서_이동할_다음_위치를_알_수_있다(int currentPosition, int expectedNextPosition) {
-        Line line = new Line(convert(true, false, false, true, false));
-
-        assertThat(line.moveFrom(new Position(currentPosition))).isEqualTo(new Position(expectedNextPosition));
     }
 }
