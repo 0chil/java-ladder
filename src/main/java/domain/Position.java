@@ -26,6 +26,11 @@ class Position {
         return new Position(position + 1);
     }
 
+    Position follow(Line line) {
+        Direction nextDirection = line.getNextDirectionFrom(this);
+        return this.moveTo(nextDirection);
+    }
+
     boolean isInBetween(int fromInclusive, int toExclusive) {
         return fromInclusive <= position && position < toExclusive;
     }
