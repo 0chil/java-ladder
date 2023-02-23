@@ -29,8 +29,21 @@ public class Participants {
 
     private void validateDistinct(Collection<?> collection) {
         if (hasDuplicateIn(collection)) {
-            throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
+            throw new IllegalArgumentException("참가자는 중복될 수 없습니다.");
         }
+    }
+
+    public Position findPositionOf(String name) {
+        Participant participant = findBy(name);
+        int position = participants.indexOf(participant);
+        return new Position(position);
+    }
+
+    private Participant findBy(String name) {
+        return participants.stream()
+                .filter(participant -> participant.hasName(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("그런 참가자가 없습니다"));
     }
 
     private boolean hasDuplicateIn(final Collection<?> target) {
@@ -38,13 +51,13 @@ public class Participants {
         return target.size() != distinct.size();
     }
 
-    public int count() {
-        return participants.size();
-    }
-
     public List<String> getNames() {
         return participants.stream()
                 .map(Participant::getName)
                 .collect(toUnmodifiableList());
+    }
+
+    public int count() {
+        return participants.size();
     }
 }
