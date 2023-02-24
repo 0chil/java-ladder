@@ -7,6 +7,7 @@ import java.util.List;
 public class Ladder {
 
     private static final int MIN_HEIGHT = 0;
+    private static final int FIRST = 0;
 
     private final List<Line> lines;
 
@@ -23,7 +24,7 @@ public class Ladder {
     }
 
     private void validateEvenWidth(final List<Line> lines) {
-        Line firstLine = lines.get(0);
+        Line firstLine = lines.get(FIRST);
         if (!isWidthEven(firstLine, lines)) {
             throw new IllegalArgumentException("사다리 너비는 균일해야 합니다");
         }

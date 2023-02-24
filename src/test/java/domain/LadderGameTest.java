@@ -22,8 +22,10 @@ class LadderGameTest extends AbstractTestFixture {
                 new Line(convert(true, false, true)),
                 new Line(convert(false, true, false)),
                 new Line(convert(true, false, true)));
+        Participants participants = new Participants(createParticipantsFrom("a", "b", "c", "d"));
+
         assertThatNoException().isThrownBy(
-                () -> new LadderGame(createDefaultParticipants(), ladder, createPrizesFrom("1", "2", "3", "4")));
+                () -> new LadderGame(participants, ladder, createPrizesFrom("1", "2", "3", "4")));
     }
 
     @ParameterizedTest
