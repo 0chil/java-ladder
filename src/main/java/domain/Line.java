@@ -2,15 +2,64 @@ package domain;
 
 import static java.util.List.copyOf;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Line {
 
+    private final List<Point> points;
     private final List<Bridge> bridges;
 
     public Line(final List<Bridge> bridges) {
         validateBridges(bridges);
-        this.bridges = copyOf(bridges);
+        validatePoints(seperateBridges(bridges));
+        this.points = seperateBridges(bridges);
+        this.bridges = join(points);
+    }
+
+    public Line(final Collection<Point> points) {
+        List<Bridge> bridges = join(copyOf(points));
+        validateBridges(bridges);
+        validatePoints(copyOf(points));
+        this.points = copyOf(points);
+        this.bridges = bridges;
+    }
+
+    private List<Point> seperateBridges(List<Bridge> bridges) {
+        List<Point> points = new ArrayList<>();
+        Point point = new Point();
+        for (Bridge bridge : bridges) {
+            point = point.createNextWith(bridge);
+            points.add(point);
+        }
+        points.add(point.last());
+        return points;
+    }
+
+    private List<Bridge> join(List<Point> points) {
+        List<Bridge> bridges = new ArrayList<>();
+        Point prev = points.get(0);
+        for (int i = 1; i < points.size(); i++) {
+            Point cur = points.get(i);
+            bridges.add(prev.joinWith(cur));
+            prev = cur;
+        }
+        return bridges;
+    }
+
+    private void validatePoints(final List<Point> points) {
+        for (int i = 0; i < points.size() - 1; i++) {
+            var current = points.get(i);
+            var next = points.get(i + 1);
+            validateSymmetric(current, next);
+        }
+    }
+
+    private void validateSymmetric(Point current, Point next) {
+        if (!current.isSymmetricWith(next)) {
+            throw new IllegalArgumentException("연속인 다리가 있습니다");
+        }
     }
 
     private void validateBridges(final List<Bridge> bridges) {
@@ -28,35 +77,20 @@ public class Line {
     }
 
     public Direction findDirectionFrom(final Position position) {
-        if (getLeftBridgeFrom(position).doesExist()) {
-            return Direction.LEFT;
-        }
-        if (getRightBridgeFrom(position).doesExist()) {
-            return Direction.RIGHT;
-        }
-        return Direction.STAY;
+        return getPointAt(position).getDirection();
     }
 
-    private Bridge getLeftBridgeFrom(Position position) {
-        return getBridgeAt(position.left());
-    }
-
-    private Bridge getRightBridgeFrom(Position position) {
-        return getBridgeAt(position);
-    }
-
-    private Bridge getBridgeAt(Position position) {
-        if (position.isInRangeOf(bridges)) {
-            return bridges.get(position.getPosition());
-        }
-        return Bridge.EMPTY;
+    private Point getPointAt(Position position) {
+        return points.get(position.getPosition());
     }
 
     public List<Bridge> getBridges() {
-        return bridges;
+        return join(points);
     }
 
     public boolean hasSameWidthWith(Line line) {
-        return line.bridges.size() == bridges.size();
+        // return line.bridges.size() == bridges.size();
+        // return line.join(line.points).size() == join(points).size();
+        return line.points.size() == points.size();
     }
 }
