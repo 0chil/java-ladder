@@ -3,39 +3,38 @@ package domain;
 import static java.util.List.copyOf;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Line {
 
     private final List<Point> points;
-    private final List<Bridge> bridges;
+    // private final List<Bridge> bridges;
 
-    public Line(final List<Bridge> bridges) {
-        validateBridges(bridges);
-        validatePoints(seperateBridges(bridges));
-        this.points = seperateBridges(bridges);
-        this.bridges = join(points);
-    }
+    // public Line(final List<Bridge> bridges) {
+    //     validateBridges(bridges);
+    //     validatePoints(seperateBridges(bridges));
+    //     this.points = seperateBridges(bridges);
+    //     this.bridges = join(points);
+    // }
 
-    public Line(final Collection<Point> points) {
-        List<Bridge> bridges = join(copyOf(points));
-        validateBridges(bridges);
+    public Line(final List<Point> points) {
+        // List<Bridge> bridges = join(copyOf(points));
+        // validateBridges(bridges);
         validatePoints(copyOf(points));
         this.points = copyOf(points);
-        this.bridges = bridges;
+        // this.bridges = bridges;
     }
 
-    private List<Point> seperateBridges(List<Bridge> bridges) {
-        List<Point> points = new ArrayList<>();
-        Point point = new Point();
-        for (Bridge bridge : bridges) {
-            point = point.createNextWith(bridge);
-            points.add(point);
-        }
-        points.add(point.last());
-        return points;
-    }
+    // private List<Point> seperateBridges(List<Bridge> bridges) {
+    //     List<Point> points = new ArrayList<>();
+    //     Point point = new Point();
+    //     for (Bridge bridge : bridges) {
+    //         point = point.createNextWith(bridge);
+    //         points.add(point);
+    //     }
+    //     points.add(point.last());
+    //     return points;
+    // }
 
     private List<Bridge> join(List<Point> points) {
         List<Bridge> bridges = new ArrayList<>();
@@ -58,23 +57,23 @@ public class Line {
 
     private void validateSymmetric(Point current, Point next) {
         if (!current.isSymmetricWith(next)) {
-            throw new IllegalArgumentException("연속인 다리가 있습니다");
+            throw new IllegalArgumentException("잘못된 다리가 있습니다");
         }
     }
 
-    private void validateBridges(final List<Bridge> bridges) {
-        for (int i = 0; i < bridges.size() - 1; i++) {
-            Bridge currentBridge = bridges.get(i);
-            Bridge nextBridge = bridges.get(i + 1);
-            validateNotSerial(currentBridge, nextBridge);
-        }
-    }
-
-    private void validateNotSerial(final Bridge currentBridge, final Bridge nextBridge) {
-        if (currentBridge.isSerialWith(nextBridge)) {
-            throw new IllegalArgumentException("연속된 가로 라인이 존재합니다");
-        }
-    }
+    // private void validateBridges(final List<Bridge> bridges) {
+    //     for (int i = 0; i < bridges.size() - 1; i++) {
+    //         Bridge currentBridge = bridges.get(i);
+    //         Bridge nextBridge = bridges.get(i + 1);
+    //         validateNotSerial(currentBridge, nextBridge);
+    //     }
+    // }
+    //
+    // private void validateNotSerial(final Bridge currentBridge, final Bridge nextBridge) {
+    //     if (currentBridge.isSerialWith(nextBridge)) {
+    //         throw new IllegalArgumentException("연속된 가로 라인이 존재합니다");
+    //     }
+    // }
 
     public Direction findDirectionFrom(final Position position) {
         return getPointAt(position).getDirection();
