@@ -5,6 +5,7 @@ import java.util.List;
 
 import domain.Bridge;
 import domain.Line;
+import domain.Point;
 
 public class LineGenerator {
 
@@ -15,20 +16,46 @@ public class LineGenerator {
     }
 
     public Line generate(final int personCount) {
-        List<Bridge> newBridges = new ArrayList<>();
-        Bridge lastBridge = Bridge.EMPTY;
-        for (int i = 0; i < personCount - 1; i++) {
-            Bridge nextBridge = getNextBridgeAfter(lastBridge);
-            newBridges.add(nextBridge);
-            lastBridge = nextBridge;
-        }
-        return new Line(newBridges);
+        List<Point> points = generatePoints(personCount);
+        List<Bridge> bridges = join(points);
+        return new Line(bridges);
     }
 
-    private Bridge getNextBridgeAfter(final Bridge lastBridge) {
-        if (lastBridge.doesExist()) {
-            return Bridge.EMPTY;
+    private List<Point> generatePoints(int personCount) {
+        Point point = new Point();
+        List<Point> points = new ArrayList<>();
+        for (int i = 0; i < personCount - 1; i++) {
+            point = generatePointAfter(point);
+            points.add(point);
         }
-        return bridgeGenerator.generate();
+        points.add(point.last());
+        System.out.println("points = " + points);
+        return points;
     }
+
+    private List<Bridge> join(List<Point> points) {
+        List<Bridge> bridges = new ArrayList<>();
+        Point prev = points.get(0);
+        for (int i = 1; i < points.size(); i++) {
+            Point cur = points.get(i);
+            bridges.add(prev.joinWith(cur));
+            prev = cur;
+        }
+        return bridges;
+    }
+
+    private Point generatePointAfter(Point point) {
+        try {
+            return point.createNextWith(bridgeGenerator.generate());
+        } catch (IllegalArgumentException overlappedBridgeException) {
+            return point.createNextWith(Bridge.EMPTY);
+        }
+    }
+
+    // private Bridge getNextBridgeAfter(final Bridge lastBridge) {
+    //     if (lastBridge.doesExist()) {
+    //         return Bridge.EMPTY;
+    //     }
+    //     return bridgeGenerator.generate();
+    // }
 }
