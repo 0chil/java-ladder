@@ -52,7 +52,7 @@ public class Point {
         return next.direction.isRight() || next.direction.isStay();
     }
 
-    public Direction getDirection() {
-        return this.direction;
+    public Position slide(Position position) {
+        return position.moveTo(direction);
     }
 }

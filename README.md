@@ -29,9 +29,12 @@
 - 연결점
   - [x] 연결점에서 방향 enum을 사용한다
   - [x] 다리가 연속되면 IllegalArgumentException 대신, SerialBridgeException을 던진다
+  - [ ] 메서드 순서
 - 위치
   - [x] 위치는 음수일 수 없다 (기능 추가)
   - [x] 위치의 `left()`, `right()` 메서드를 `moveTo(Direction direction)` 으로 통합
+- 가로줄
+  - [x] 이동 방향을 알아내지 않고, 연결점이 위치를 이동시키도록 명령한다.
 - 테스트
   - [ ] 테스트에 `@DisplayName` 사용, `@ParameterizedTest`는 name 사용 
 
@@ -99,8 +102,7 @@
 
 ### 가로줄
 - [x] 연속되는 브릿지를 가진 Line을 생성할 수 없다
-- [x] 현재 위치에서 이동할 다음 위치를 알 수 있다.
-  - 좌측, 유지, 우측
+- [x] 현재 위치에서 다음 위치로 이동시킨다
 
 ### 위치
 - [x] 특정 방향으로 이동시킬 수 있다

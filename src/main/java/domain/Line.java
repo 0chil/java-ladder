@@ -39,8 +39,8 @@ public class Line {
         }
     }
 
-    public Direction findDirectionFrom(final Position position) {
-        return getPointAt(position).getDirection();
+    public Position slide(final Position position) {
+        return getPointAt(position).slide(position);
     }
 
     private Point getPointAt(Position position) {
@@ -49,9 +49,5 @@ public class Line {
 
     public List<Bridge> getBridges() {
         return join(points);
-    }
-
-    public boolean hasSameWidthWith(Line line) {
-        return line.points.size() == points.size();
     }
 }

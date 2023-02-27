@@ -38,8 +38,7 @@ public class Ladder {
     public Position findDestinationFrom(final Position start) {
         Position position = start;
         for (Line line : lines) {
-            Direction direction = line.findDirectionFrom(position);
-            position = position.moveTo(direction);
+            position = line.slide(position);
         }
         return position;
     }

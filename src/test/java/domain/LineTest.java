@@ -42,12 +42,12 @@ class LineTest extends AbstractTestFixture {
                 .isThrownBy(() -> new Line(convert(true)));
     }
 
-    @ParameterizedTest
-    @CsvSource({"0,RIGHT", "1,LEFT", "2,STAY", "3,RIGHT", "4,LEFT", "5,STAY"})
-    void 현재_위치에서_이동할_다음_방향을_알_수_있다(int currentPosition, Direction nextDirection) {
+    @ParameterizedTest(name = "현재 위치에서 다음 위치로 이동시킨다")
+    @CsvSource({"0,1", "1,0", "2,2", "3,4", "4,3", "5,5"})
+    void 현재_위치에서_다음_위치로_이동시킨다(int currentPosition, int nextPosition) {
         Line line = new Line(convert(true, false, false, true, false));
         Position position = new Position(currentPosition);
 
-        assertThat(line.findDirectionFrom(position)).isEqualTo(nextDirection);
+        assertThat(line.slide(position)).isEqualTo(new Position(nextPosition));
     }
 }
