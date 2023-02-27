@@ -35,7 +35,7 @@ public class Line {
 
     private void validateSymmetric(Point current, Point next) {
         if (!current.isSymmetricWith(next)) {
-            throw new IllegalArgumentException("잘못된 다리가 있습니다");
+            throw new IllegalArgumentException("연결점과 연결점 사이는 대칭이어야 합니다");
         }
     }
 
