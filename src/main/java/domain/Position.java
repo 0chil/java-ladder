@@ -1,13 +1,18 @@
 package domain;
 
-import java.util.Collection;
-
 class Position {
 
     private final int position;
 
     Position(int position) {
+        validateNotNegative(position);
         this.position = position;
+    }
+
+    private void validateNotNegative(int position) {
+        if (position < 0) {
+            throw new IllegalArgumentException("위치는 음수일 수 없습니다");
+        }
     }
 
     Position moveTo(Direction direction) {
