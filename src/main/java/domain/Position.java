@@ -17,28 +17,12 @@ class Position {
 
     Position moveTo(Direction direction) {
         if (direction.isLeft()) {
-            return left();
+            return new Position(position - 1);
         }
         if (direction.isRight()) {
-            return right();
+            return new Position(position + 1);
         }
-        return stay();
-    }
-
-    Position left() {
-        return new Position(position - 1);
-    }
-
-    Position right() {
-        return new Position(position + 1);
-    }
-
-    Position stay() {
-        return new Position(position);
-    }
-
-    public boolean isInRangeOf(Collection<?> collection) {
-        return 0 <= position && position < collection.size();
+        return this;
     }
 
     @Override

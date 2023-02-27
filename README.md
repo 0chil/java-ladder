@@ -24,8 +24,16 @@
   - [x] 테스트에서 생성하는 다리들도 연결점들로 대체한다.
 
 ### 그 외
-- [x] 연결점에서 방향 enum을 사용한다
-- [x] 다리가 연속되면 IllegalArgumentException 대신, SerialBridgeException을 던진다
+- 기능 목록
+  - [ ] 기능목록의 용어를 사물 명칭으로 통일
+- 연결점
+  - [x] 연결점에서 방향 enum을 사용한다
+  - [x] 다리가 연속되면 IllegalArgumentException 대신, SerialBridgeException을 던진다
+- 위치
+  - [x] 위치는 음수일 수 없다 (기능 추가)
+  - [x] 위치의 `left()`, `right()` 메서드를 `moveTo(Direction direction)` 으로 통합
+- 테스트
+  - [ ] 테스트에 `@DisplayName` 사용, `@ParameterizedTest`는 name 사용 
 
 
 <details>
@@ -47,7 +55,7 @@
 
 ## 기능 목록
 
-### 연결점(Point)
+### 연결점
 `왼쪽`, `오른쪽`, `유지`의 세 가지 방향이 있다.  
 `ㅤ|--`, `--|ㅤ`, `ㅤ|ㅤ`
 - [x] 다음 다리에 맞게 다음 연결점을 생성한다.
@@ -95,8 +103,6 @@
   - 좌측, 유지, 우측
 
 ### 위치
-- [x] 현재 위치의 왼쪽, 오른쪽을 알 수 있다.
-- [x] 컬렉션 범위에 있는지 알 수 있다.
 - [x] 특정 방향으로 이동시킬 수 있다
 - [x] 위치는 음수일 수 없다
 
