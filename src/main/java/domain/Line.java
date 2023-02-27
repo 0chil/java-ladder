@@ -14,17 +14,6 @@ public class Line {
         this.points = copyOf(points);
     }
 
-    private List<Bridge> join(List<Point> points) {
-        List<Bridge> bridges = new ArrayList<>();
-        Point prev = points.get(0);
-        for (int i = 1; i < points.size(); i++) {
-            Point cur = points.get(i);
-            bridges.add(prev.joinWith(cur));
-            prev = cur;
-        }
-        return bridges;
-    }
-
     private void validatePoints(final List<Point> points) {
         for (int i = 0; i < points.size() - 1; i++) {
             var current = points.get(i);
@@ -43,11 +32,26 @@ public class Line {
         return getPointAt(position).slide(position);
     }
 
+    public boolean hasSameWidthWith(Line line) {
+        return line.points.size() == points.size();
+    }
+
     private Point getPointAt(Position position) {
         return points.get(position.getPosition());
     }
 
     public List<Bridge> getBridges() {
         return join(points);
+    }
+
+    private List<Bridge> join(final List<Point> points) {
+        List<Bridge> bridges = new ArrayList<>();
+        Point left = points.get(0);
+        for (int i = 1; i < points.size(); i++) {
+            Point current = points.get(i);
+            bridges.add(left.joinWith(current));
+            left = current;
+        }
+        return bridges;
     }
 }
