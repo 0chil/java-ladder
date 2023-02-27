@@ -6,6 +6,7 @@ import java.util.List;
 import domain.Bridge;
 import domain.Line;
 import domain.Point;
+import domain.exception.SerialBridgeException;
 
 public class LineGenerator {
 
@@ -34,7 +35,7 @@ public class LineGenerator {
     private Point generatePointAfter(Point point) {
         try {
             return point.createNextWith(bridgeGenerator.generate());
-        } catch (IllegalArgumentException overlappedBridgeException) {
+        } catch (SerialBridgeException exception) {
             return point.createNextWith(Bridge.EMPTY);
         }
     }

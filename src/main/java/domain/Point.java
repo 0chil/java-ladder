@@ -1,72 +1,58 @@
 package domain;
 
+import domain.exception.SerialBridgeException;
+
 public class Point {
 
-    private final boolean left;
-    private final boolean right;
+    private final Direction direction;
 
     public Point() {
-        this(false, false);
+        this(Direction.STAY);
     }
 
-    public Point(boolean left, boolean right) {
-        this.left = left;
-        this.right = right;
+    public Point(Direction direction) {
+        this.direction = direction;
     }
 
     public Bridge joinWith(Point next) {
-        if (this.right && next.left) {
+        if (this.direction.isRight() && next.direction.isLeft()) {
             return Bridge.EXIST;
         }
         return Bridge.EMPTY;
     }
 
-    public Point createNextWith(Bridge nextBridge) throws IllegalArgumentException {
-        if (right && nextBridge.doesExist()) {
-            throw new IllegalArgumentException("연속된 다리가 생성되었습니다");
+    public Point createNextWith(Bridge nextBridge) throws SerialBridgeException {
+        validateNotSerial(nextBridge);
+        if (this.direction.isRight()) {
+            return new Point(Direction.LEFT);
         }
-        return new Point(right, nextBridge.doesExist());
-        // if (left) {
-        //     return new Point(false, nextBridge.doesExist());
-        // }
-        // if (right) {
-        //     return new Point(true, false);
-        // }
-        // return new Point(false, nextBridge.doesExist());
+        if (nextBridge.doesExist()) {
+            return new Point(Direction.RIGHT);
+        }
+        return new Point(Direction.STAY);
+    }
+
+    private void validateNotSerial(Bridge nextBridge) throws SerialBridgeException {
+        if (this.direction.isRight() && nextBridge.doesExist()) {
+            throw new SerialBridgeException();
+        }
     }
 
     public Point last() {
-        return new Point(right, false);
+        if (this.direction.isRight()) {
+            return new Point(Direction.LEFT);
+        }
+        return new Point(Direction.STAY);
     }
 
     public boolean isSymmetricWith(Point next) {
-        if (right) {
-            return next.left;
+        if (this.direction.isRight()) {
+            return next.direction.isLeft();
         }
-        if (left) {
-            return !next.left;
-        }
-        return !next.left;
+        return next.direction.isRight() || next.direction.isStay();
     }
 
     public Direction getDirection() {
-        if (left) {
-            return Direction.LEFT;
-        }
-        if (right) {
-            return Direction.RIGHT;
-        }
-        return Direction.STAY;
-    }
-
-    @Override
-    public String toString() {
-        if (right) {
-            return "  |--";
-        }
-        if (left) {
-            return "--|  ";
-        }
-        return "  |  ";
+        return this.direction;
     }
 }

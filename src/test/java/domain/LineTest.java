@@ -9,15 +9,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import domain.exception.SerialBridgeException;
 import helper.AbstractTestFixture;
 
 class LineTest extends AbstractTestFixture {
 
-    @ParameterizedTest(name = "브릿지가 연속될 경우 IllegalArgumentException을 던진다")
+    @ParameterizedTest(name = "브릿지가 연속될 경우 SerialBridgeException 던진다")
     @CsvSource(value = {"true,true,false", "false,true,true", "true,true,true"})
-    void test_serial_IllegalArgumentException(boolean firstBridge, boolean secondBridge, boolean thirdBridge) {
+    void test_serial_SerialBridgeException(boolean firstBridge, boolean secondBridge, boolean thirdBridge) {
         assertThatThrownBy(() -> new Line(convert(firstBridge, secondBridge, thirdBridge)))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(SerialBridgeException.class);
     }
 
     @ParameterizedTest(name = "연속되지 않는 브릿지들로 Line을 생성한다")
