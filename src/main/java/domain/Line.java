@@ -23,7 +23,7 @@ public class Line {
     }
 
     private void validateSymmetric(Point current, Point next) {
-        if (!current.isSymmetricWith(next)) {
+        if (current.isNotSymmetricWith(next)) {
             throw new IllegalArgumentException("연결점과 연결점 사이는 대칭이어야 합니다");
         }
     }
@@ -32,8 +32,8 @@ public class Line {
         return getPointAt(position).slide(position);
     }
 
-    public boolean hasSameWidthWith(Line line) {
-        return line.points.size() == points.size();
+    public boolean hasDifferentWidthWith(Line line) {
+        return line.points.size() != points.size();
     }
 
     private Point getPointAt(Position position) {

@@ -45,7 +45,11 @@ public class Point {
         return new Point(Direction.STAY);
     }
 
-    public boolean isSymmetricWith(Point next) {
+    public boolean isNotSymmetricWith(Point next) {
+        return !this.isSymmetricWith(next);
+    }
+
+    private boolean isSymmetricWith(Point next) {
         if (this.direction.isRight()) {
             return next.direction.isLeft();
         }

@@ -25,11 +25,11 @@
 
 ### 그 외
 - 기능 목록
-  - [ ] 기능목록의 용어를 사물 명칭으로 통일
+  - [x] 기능목록의 용어를 사물 명칭으로 통일
 - 연결점
   - [x] 연결점에서 방향 enum을 사용한다
   - [x] 다리가 연속되면 IllegalArgumentException 대신, SerialBridgeException을 던진다
-  - [ ] 메서드 순서
+  - [x] 메서드 순서
 - 위치
   - [x] 위치는 음수일 수 없다 (기능 추가)
   - [x] 위치의 `left()`, `right()` 메서드를 `moveTo(Direction direction)` 으로 통합
@@ -38,7 +38,8 @@
 - 테스트
   - [ ] 테스트에 `@DisplayName` 사용, `@ParameterizedTest`는 name 사용
   - [ ] 변수 정리
-
+- 코드
+  - [x] if 키워드 뒤의 ! 를 대체한다
 
 <details>
 <summary>리팩터링 목록 (1단계)</summary>
