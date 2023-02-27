@@ -11,6 +11,7 @@ import domain.Line;
 import domain.Participant;
 import domain.Participants;
 import domain.Point;
+import domain.Prizes;
 
 public abstract class AbstractTestFixture {
 
@@ -47,8 +48,8 @@ public abstract class AbstractTestFixture {
                 .collect(Collectors.toList());
     }
 
-    public List<String> createPrizesFrom(String... names) {
-        return List.of(names);
+    public Prizes createPrizesFrom(String... names) {
+        return new Prizes(List.of(names));
     }
 
     public List<Line> createLines(final int height) {
