@@ -36,7 +36,8 @@
 - 가로줄
   - [x] 이동 방향을 알아내지 않고, 연결점이 위치를 이동시키도록 명령한다.
 - 테스트
-  - [ ] 테스트에 `@DisplayName` 사용, `@ParameterizedTest`는 name 사용 
+  - [ ] 테스트에 `@DisplayName` 사용, `@ParameterizedTest`는 name 사용
+  - [ ] 변수 정리
 
 
 <details>
