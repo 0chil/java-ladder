@@ -28,7 +28,7 @@
   - [x] 기능목록의 용어를 사물 명칭으로 통일
 - 연결점
   - [x] 연결점에서 방향 enum을 사용한다
-  - [x] 다리가 연속되면 IllegalArgumentException 대신, SerialBridgeException을 던진다
+  - [x] 다리가 연속되면 IllegalArgumentException 대신, SerialBridgeException을 던진다 (CustomException)
   - [x] 메서드 순서
 - 위치
   - [x] 위치는 음수일 수 없다 (기능 추가)
@@ -105,8 +105,8 @@
 ### 가로줄 생성기
 
 - [x] 가로줄 하나를 생성한다
-- [x] 한 가로줄은 최대 (사람 수 - 1)개의 다리를 가진다
 - [x] 다리가 연속되지 않게 생성한다.
+- [x] 다리를 연결점들로 표현한다.
 
 ### 가로줄
 - [x] 연속되는 브릿지를 가진 Line을 생성할 수 없다
