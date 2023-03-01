@@ -5,8 +5,6 @@ import java.util.List;
 
 import domain.Bridge;
 import domain.Line;
-import domain.Point;
-import domain.exception.SerialBridgeException;
 
 public class LineGenerator {
 
@@ -17,26 +15,20 @@ public class LineGenerator {
     }
 
     public Line generate(final int personCount) {
-        List<Point> points = generatePoints(personCount);
-        return new Line(points);
-    }
-
-    private List<Point> generatePoints(int personCount) {
-        Point point = new Point();
-        List<Point> points = new ArrayList<>();
+        List<Bridge> newBridges = new ArrayList<>();
+        Bridge lastBridge = Bridge.EMPTY;
         for (int i = 0; i < personCount - 1; i++) {
-            point = generatePointAfter(point);
-            points.add(point);
+            Bridge nextBridge = getNextBridgeAfter(lastBridge);
+            newBridges.add(nextBridge);
+            lastBridge = nextBridge;
         }
-        points.add(point.last());
-        return points;
+        return new Line(newBridges);
     }
 
-    private Point generatePointAfter(Point point) {
-        try {
-            return point.createNextWith(bridgeGenerator.generate());
-        } catch (SerialBridgeException exception) {
-            return point.createNextWith(Bridge.EMPTY);
+    private Bridge getNextBridgeAfter(final Bridge lastBridge) {
+        if (lastBridge.doesExist()) {
+            return Bridge.EMPTY;
         }
+        return bridgeGenerator.generate();
     }
 }
