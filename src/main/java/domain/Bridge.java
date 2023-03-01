@@ -6,12 +6,12 @@ public enum Bridge {
 
     EXIST {
         @Override
-        public List<Point> toPoints() {
+        public List<Point> separate() {
             return List.of(new Point(Direction.RIGHT), new Point(Direction.LEFT));
         }
     }, EMPTY {
         @Override
-        public List<Point> toPoints() {
+        public List<Point> separate() {
             return List.of(new Point(Direction.STAY), new Point(Direction.STAY));
         }
     };
@@ -24,5 +24,5 @@ public enum Bridge {
         return this == EXIST;
     }
 
-    public abstract List<Point> toPoints();
+    public abstract List<Point> separate();
 }
