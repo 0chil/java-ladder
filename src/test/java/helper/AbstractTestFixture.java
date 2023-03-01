@@ -10,13 +10,12 @@ import domain.Ladder;
 import domain.Line;
 import domain.Participant;
 import domain.Participants;
-import domain.Point;
 import domain.Prizes;
 
 public abstract class AbstractTestFixture {
 
-    public List<Point> convert(Boolean... flags) {
-        List<Bridge> bridges = Arrays.stream(flags)
+    public List<Bridge> convert(Boolean... flags) {
+        return Arrays.stream(flags)
                 .map((flag) -> {
                     if (flag) {
                         return Bridge.EXIST;
@@ -24,20 +23,9 @@ public abstract class AbstractTestFixture {
                     return Bridge.EMPTY;
                 })
                 .collect(Collectors.toList());
-        return separateBridges(bridges);
     }
 
-    private List<Point> separateBridges(List<Bridge> bridges) {
-        List<Point> points = new ArrayList<>();
-        Point point = new Point();
-        for (Bridge bridge : bridges) {
-            point = point.createNextWith(bridge);
-            points.add(point);
-        }
-        points.add(point.last());
-        return points;
-    }
-
+    //TODO: 불필요한 메서드 제거
     public Participants createDefaultParticipants() {
         return new Participants(createParticipantsFrom("aa", "bb"));
     }
